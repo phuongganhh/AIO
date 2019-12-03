@@ -21,7 +21,8 @@ namespace Performance
                       try
                       {
                           var api = new Api();
-                          api.Post();
+                          var r = api.Post();
+                          r.Wait();
                       }
                       catch (Exception ex)
                       {
@@ -31,40 +32,66 @@ namespace Performance
               });
             return l;
         }
-        static void Run(List<Thread> l)
+        static void Run(List<Thread> l = null)
         {
-            if(l == null && l.Count == 0)
+            Parallel.For(0, 10000, i =>
             {
-                return;
-            }
-            l.ForEach(item =>
-            {
-                item.Start();
+                try
+                {
+                    var api = new Api();
+                    var r = api.Post();
+                    r.Wait();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             });
-            while (Counter.Count != l.Count)
-            {
-
-            }
             Counter.Count = 0;
-            Console.WriteLine("Reset");
-            Run(l);
+            //Console.WriteLine("Reset");
+            //Run(l);
+        }
+        static void Run()
+        {
+            using (var api = new Api())
+            {
+                var acc = api.Register();
+                acc.Wait();
+                var r = api.Login(acc.Result);
+                r.Wait();
+                for (int j = 0; j < 1000; j++)
+                {
+                    try
+                    {
+                        r = api.Payment();
+                        r.Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+
         }
         static void Main(string[] args)
         {
-            if(args != null && args.Length > 0)
+            var l = new List<Thread>();
+            for (int i = 0; i < 1; i++)
             {
-                Process p = new Process();
-                p.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
-                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                p.Start();
-                Console.WriteLine("OK");
-                Console.ReadKey();
-                Environment.Exit(1);
+                var t = new Thread(() =>
+                {
+                    Run();
+                });
+                t.Start();
+                l.Add(t);
             }
-            var count = 100;
-            Run(CreateTheads(count));
-            Console.WriteLine("WATING...");
-            Console.ReadLine();
+            Parallel.ForEach(l, item =>
+            {
+                item.Join();
+            });
+            Console.WriteLine("done!");
+            Process.Start(Assembly.GetExecutingAssembly().Location);
         }
     }
 }
