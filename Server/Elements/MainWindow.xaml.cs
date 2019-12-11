@@ -29,28 +29,20 @@ namespace Elements
             InitializeComponent();
         }
         private SimpleTcpServer ServerLogin { get; set; }
+        private SimpleTcpServer ServerGame { get; set; }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.ServerLogin = new SimpleTcpServer();
             this.ServerLogin.ClientConnected += ServerLogin_ClientConnected;
             this.ServerLogin.ClientDisconnected += ServerLogin_ClientDisconnected;
             this.ServerLogin.DataReceived += ServerLogin_DataReceived;
-            this.ServerLogin.Start(Common.LoginServer);
+            this.ServerLogin.Start(Common.LoginServerLocal);
 
-            var a = new byte[1] { 0x4f };
+            
         }
-        private StreamWriter Writer { get; set; }
+
         private void ServerLogin_DataReceived(object sender, Message e)
         {
-            var s = "";
-            foreach (var item in e.Data)
-            {
-                s += item + " ";
-            }
-            using(this.Writer = new StreamWriter("data.txt", true))
-            {
-                this.Writer.WriteLine($"{e.Data.Length} - {s} - {e.MessageString}");
-            }
             e.TcpClient.GetUserByIP()?.SendToServer(e.Data);
         }
 
@@ -61,8 +53,9 @@ namespace Elements
 
         private void ServerLogin_ClientConnected(object sender, TcpClient e)
         {
-            new User(e.Client, Common.LoginServer);
-            //e.Client.Add(Common.LoginServer);
+            e.Client.Add(Common.LoginServer);
+            //var login = new byte[] { 8, 0, 35, 4, 168, 122, 0, 0 };
+            //e.Client.Send(login);
         }
     }
 }

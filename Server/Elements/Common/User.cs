@@ -26,15 +26,6 @@ namespace Elements
         }
         private void ConnectToServer_DataReceived(object sender, Message e)
         {
-            using(var stream = new StreamWriter("data.txt", true))
-            {
-                var s = "";
-                foreach (var item in e.Data)
-                {
-                    s += item + " ";
-                }
-                stream.WriteLine(s);
-            }
             this.Client.Send(e.Data);
         }
         public void DisconnectToServer()

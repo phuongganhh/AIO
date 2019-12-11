@@ -6,9 +6,11 @@ namespace Elements
 {
     public static class Common
     {
-        public static string IPServer = "103.27.237.153";
-        public static int LoginServer = 9958;
-        public static int GameServer = 5816;
+        public static string IPServer = "137.74.253.26";
+        public static int LoginServer = 37955;
+        public static int LoginServerLocal = 9958;
+        public static int GameServer = 5840;
+        public static int HackProtection = 56999;
 
         public static void Send(this TcpClient e,byte[] data)
         {
