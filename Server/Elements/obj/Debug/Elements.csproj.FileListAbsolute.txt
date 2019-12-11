@@ -1,0 +1,17 @@
+D:\Project\AIO\Server\Elements\bin\Debug\Elements.exe.config
+D:\Project\AIO\Server\Elements\bin\Debug\Elements.exe
+D:\Project\AIO\Server\Elements\bin\Debug\Elements.pdb
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.csprojAssemblyReference.cache
+D:\Project\AIO\Server\Elements\obj\Debug\MainWindow.g.cs
+D:\Project\AIO\Server\Elements\obj\Debug\App.g.cs
+D:\Project\AIO\Server\Elements\obj\Debug\Elements_MarkupCompile.cache
+D:\Project\AIO\Server\Elements\obj\Debug\Elements_MarkupCompile.lref
+D:\Project\AIO\Server\Elements\obj\Debug\MainWindow.baml
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.g.resources
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.Properties.Resources.resources
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.csproj.GenerateResource.cache
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.csproj.CoreCompileInputs.cache
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.exe
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.pdb
+D:\Project\AIO\Server\Elements\bin\Debug\SimpleTCP.dll
+D:\Project\AIO\Server\Elements\obj\Debug\Elements.csproj.CopyComplete
