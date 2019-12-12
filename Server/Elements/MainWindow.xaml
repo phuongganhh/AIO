@@ -5,10 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Elements"
         mc:Ignorable="d"
-        WindowStyle="None"
+        WindowStyle="ToolWindow"
         Loaded="Window_Loaded"
-        Title="MainWindow" Height="153.924" Width="403.421">
+        WindowState="Normal"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="Auto Train" Height="753.757" Width="352.255">
     <Grid>
-
+        <DataGrid Name="dataPacket" HorizontalAlignment="Left" Height="648" VerticalAlignment="Top" Width="323" Margin="10,63,0,0"/>
+        <Button Click="ButtonStart_Click" Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="3,4,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Click="ButtonStop_Click" Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="83,4,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Content="Clear" Click="ButtonClear_Click" HorizontalAlignment="Left" Margin="163,4,0,0" VerticalAlignment="Top" Width="76"/>
+        <TextBox Text="" Name="search" HorizontalAlignment="Left" Height="24" Margin="12,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317"/>
+        <Button Click="ButtonLock_Click" Name="btnLock" Content="Lock" HorizontalAlignment="Left" Margin="244,4,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Click="ButtonExit_Click" x:Name="Exit" Content="X" HorizontalAlignment="Left" Margin="320,4,0,0" VerticalAlignment="Top" Width="17"/>
     </Grid>
 </Window>
