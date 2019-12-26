@@ -60,18 +60,17 @@ namespace Master
             this.LoadMenu();
             Menu.Instance.Render();
         }
+        private Process CurrentProcess { get; set; }
         private void SetWindow()
         {
-            Process pr = null;
-            Rect rect = new Rect();
-            while(pr == null)
+            while(this.CurrentProcess == null)
             {
                 Process p = Process.GetProcesses("Main").FirstOrDefault();
                 if(p != null)
                 {
                     if(p.MainWindowHandle != IntPtr.Zero)
                     {
-                        pr = p;
+                        this.CurrentProcess = p;
                     }
                 }
             }
@@ -83,7 +82,13 @@ namespace Master
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            throw new NotImplementedException();
+            Rect rect = new Rect();
+            Common.GetWindowRect(this.CurrentProcess.MainWindowHandle,ref rect);
+            this.Dispatcher.Invoke(() =>
+            {
+                this.Left = rect.Left - 10;
+                this.Top = rect.Top - 10;
+            });
         }
 
         private void LoadMenu()
