@@ -24,7 +24,8 @@ namespace Elements
         }
         public void SendToServer(byte[] data)
         {
-            this.ConnectToServer.Write(data);
+            if(this.ConnectToServer.TcpClient.Connected)
+                this.ConnectToServer.Write(data);
         }
         private void ConnectToServer_DataReceived(object sender, Message e)
         {

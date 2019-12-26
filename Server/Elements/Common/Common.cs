@@ -58,24 +58,24 @@ namespace Elements
         public static int GameServer = 5840;
         public static int HackProtection = 56999;
         public static Packet Packet { get; set; } = new Packet();
+        public static User sk
+        {
+            get
+            {
+                return Users.LastOrDefault();
+            }
+        }
         public static void StartAuto()
         {
-            if(Users.Count > 0)
+            if (sk != null)
             {
-                foreach (var u in Users)
+                while (Packet.isStart)
                 {
-                    new Thread((usr) =>
+                    foreach (var item in Packet.Data)
                     {
-                        var user = (User)usr;
-                        while (Packet.isStart)
-                        {
-                            foreach (var item in Packet.Data)
-                            {
-                                user.SendToServer(item);
-                                Thread.Sleep(1500);
-                            }
-                        }
-                    }).Start(u);
+                        sk.SendToServer(item);
+                        Thread.Sleep(1500);
+                    }
                 }
             }
         }

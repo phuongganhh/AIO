@@ -5,3 +5,8 @@
 /.vs/AIO/v15
 /Performance/bin/Debug
 /Server/Elements/obj/Debug
+/Editor/PacketEditor/bin/Debug
+/Editor/PacketEditor/obj/Debug
+/MU/Master/obj/Debug
+/MU/Master/bin/Debug
+/Server/Elements/bin/Debug
