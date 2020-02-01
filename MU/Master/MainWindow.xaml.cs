@@ -25,10 +25,6 @@ namespace Master
         private Point Pixel { get; set; }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-
-
-
             this.Pixel = new Point(300, 300);
             var pos = new Point(0, 0);
             Menu.Instance = new Menu()
