@@ -13,7 +13,7 @@ namespace HCMUE
 {
     public class Result
     {
-        public int Status { get; set; }
+        public string Msg { get; set; }
     }
     static class Program
     {
@@ -29,16 +29,13 @@ namespace HCMUE
                         ["password"] = "mupiu123"
                     };
                     var data = new FormUrlEncodedContent(dic);
-                    var result = Http.PostAsync("/Login", data);
+                    var result = Http.PostAsync("/Login/index", data);
                     result.Wait();
-                    if (result.Result.IsSuccessStatusCode)
-                    {
-                        var content = result.Result.Content.ReadAsStringAsync();
-                        content.Wait();
-                        Console.Title = dic["username"];
-                        return !content.Result.Contains("Đăng nhập");
-                    }
-                    return false;
+
+                    var content = result.Result.Content.ReadAsStringAsync();
+                    content.Wait();
+                    Console.Title = dic["username"];
+                    return content.Result.Contains("dkhp.cntp.edu.vn");
                 }
                 return false;
             }
@@ -47,7 +44,7 @@ namespace HCMUE
                 return false;
             }
         }
-        private static bool Register(this string link)
+        private static string Register(this string link)
         {
             if(Http != null)
             {
@@ -58,18 +55,27 @@ namespace HCMUE
                     var content = result.Result.Content.ReadAsStringAsync();
                     content.Wait();
                     var data = JsonConvert.DeserializeObject<Result>(content.Result);
-                    return data.Status == 1;
+                    return data.Msg;
                 }
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
         private static HttpClient Http { get; set; }
         private static DateTime Timer { get; set; }
         static void Main(string[] args)
         {
+            if(args.Length > 0)
+            {
+                var process = new Process();
+                process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process.Start();
+                Environment.Exit(1);
+            }
             try
             {
+                Console.OutputEncoding = Encoding.UTF8;
                 Http = new HttpClient();
                 Http.BaseAddress = new Uri("https://dkhp.hcmue.edu.vn");
                 var isLogin = Login();
@@ -79,25 +85,22 @@ namespace HCMUE
                     Console.WriteLine("[OK]");
                     var links = File.ReadAllLines("hcmue.link").ToList();
                     Timer = DateTime.Now;
-                    while ((DateTime.Now - Timer).TotalMinutes <= 10)
+                    while ((DateTime.Now - Timer).TotalMinutes <= 1)
                     {
                         foreach (var link in links)
                         {
                             var result = link.Register();
                             Console.Write(link);
-                            if (result)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine("\t[OK]");
-                            }
-                            else
-                            {
-                                Console.ResetColor();
-                                Console.WriteLine("\t[FAILED]");
-                            }
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\t" + result);
+                            Console.ResetColor();
                         }
                     }
-                    Process.Start(Assembly.GetExecutingAssembly().Location);
+                    var process = new Process();
+                    process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    process.Start();
+                    Environment.Exit(1);
                 }
                 else
                 {
